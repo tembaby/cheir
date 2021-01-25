@@ -1,0 +1,45 @@
+  /* $Id: ChangLog,v 1.8 2002/10/11 19:17:23 te Exp $ */
+
+- 1.0.0
+  . Released version 1.0.0.
+  . Report error message if failed to open or create the output file.
+  . No need to check for multiple definition of external function.
+  . Added support for analyzing single file.
+  . Changed getopt.c from GNU version to the one shipped with second
+    Berkeley networking distirbution (net2) /src/lib/libc/stdlib/getopt.c.
+  . Added -V (version) option.
+
+- 1.0.1
+  . Put most of the source under BSD license.
+
+- 1.0.2
+  . Fixed error in handling -v option.
+  . Added support for printing all function definition occurences and the
+    module name for where they reside (if found more than one occurence.)
+  . Added support for module_name:function_name in resolving function names.
+
+- 1.0.3
+  . Fixed error regarding handling of escaped double quotation in string
+    constant that made the program screw up.
+  . Very minor change in logging.
+
+- 1.0.4
+  . Some fixes that i don't remember.
+  . I remember now!  I added support for make file generation.
+
+- 1.0.5
+  . Fixed error in handling construct like: include "hdr.h"
+    The fix was only in lex.l, the problem was that the double quote char
+    was always catched by the first opening rule in inclusion context.
+
+- 1.0.6
+  . Fixed error in split() that was trying to reallocate global unrelated
+    pointer.
+
+- 1.0.7
+  . Statements like: 
+       data[(int)var]
+    caused cheir to interpret data as function call.  Fixed in lexer.
+
+- 1.0.8
+  . Windows port. (Again.)

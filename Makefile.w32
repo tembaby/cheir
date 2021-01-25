@@ -1,0 +1,14 @@
+# $Id: Makefile.w32,v 1.2 2002/10/11 19:12:55 te Exp $
+#
+
+CLEAN_EXTRA 	= lexer.c		## XXX not implemented by this version.
+OBJS		= mem.obj lexer.obj main.obj stack.obj extract.obj getline.obj \
+		  getopt.obj
+TRGT		= cheir
+DEFINE		= -D_WINDOWS
+DEBUG		= YES
+
+!include <mk.exe.inc>
+
+lex		:
+	flex -olexer.c lex.l

@@ -1,0 +1,12 @@
+/* $Id: TODO,v 1.4 2002/05/22 02:19:52 te Exp $ */ 
+
+- 10-5-2002
+  Add support for generating makefile. (OK 17-5-2002)
+
+- 11-5-2002
+  Add gaurd against declspec(...) keyword of microsoft compiler.
+
+- 22-5-2002
+  Global variables
+  Global struct definitions
+  Global #defines

@@ -1,0 +1,96 @@
+# $Id: README,v 1.2 2002/04/11 19:15:42 te Exp $
+#
+
+#diff -u -d --new-file cheir.orig cheir > cheir.patch
+
+File context
+------------
+(mod_ctx)
+structure for each C source file.
+- module name.
+- list of function definitions.
+- list of include headers.
+
+Function definition context
+---------------------------
+(funcd_ctx)
+structure for every function definition.
+- function name.
+- type (static/external?)
+- start/end line.
+- back pointer to mod_ctx.
+- list of function used in definition.
+
+Function dependency list
+------------------------
+(dep_list)
+a list of function called within a function definition.
+- function name.
+- type (external/resolved)
+- back pointer to caller (funcd_ctx).
+- pointer to function definition (funcd_ctx).
+
+Not to be implemented
+---------------------
+- Global variables.
+- Preprocessor macros.
+- Function pointers.
+- Will fail on badly written code.
+  int x; int func() { return 1; }  // will return first stmt on extraction	
+
+  #define BEGIN {
+  int func
+  BEGIN // blah blah blah
+
+Heir
+----
+    main
+     |---------------------\
+     V (1)                  \ (2)
+   get_funcd_context         \--> loop:
+     |                                 get_next_func (--> Parser? --> Lexer)
+     V                                 add_to_current_func_context
+   parser                              goto loop until next func is NULL
+     |
+     V
+   Lexer
+
+   NOTE: get_next_func finish when matching closing '}' of function body.
+         (when uncovering NULL from the BRACES stack.)
+
+Matching function definition context
+------------------------------------
+
+	[static] [type] id ( param_list )
+
+	inpu_opt: static (Start)
+	       push (static state)
+
+	input_opt: type (Start)
+	       push (type state)
+
+	input: id (Start)
+		push (id state)
+
+	input: '('
+		push_opt ( '(' )
+	
+	input: param_list
+	       push (param_list state)
+
+	input: ')'
+	        push_opt ( ')' )
+	
+	if next token is ';'
+	. pop all (free stack)
+	. clean up
+	. quit (not a function definition)
+
+	try matching old style definition
+
+	if next token '{'
+	. create func definition context
+	. flag others for function definition context (E.g., Parser)
+	. from state stack, get start line number, id, type (static/external)
+	. return function definition context
+
